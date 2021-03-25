@@ -2,12 +2,12 @@ import React from "react";
 import s from "./Profile.module.css"
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPosts from "./MyPosts/MyPosts";
+import {ActionsTypes} from "../../redux/state";
 
 type RootStateType = {
     profilePage: ProfilePageType
-    addPost: (postMessage: string) => void
     message: string
-    onPostChange: (newText: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 type ProfilePageType = {
     posts: Array<PostsType>
@@ -22,11 +22,10 @@ function Profile(props: RootStateType) {
 
     return (
         <div>
-            <ProfileInfo />
+            <ProfileInfo/>
             <MyPosts posts={props.profilePage.posts}
-                     addPost={props.addPost}
                      message={props.message}
-                     onPostChange={props.onPostChange} />
+                     dispatch={props.dispatch}/>
         </div>
     )
 }

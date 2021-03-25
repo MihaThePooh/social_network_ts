@@ -5,9 +5,15 @@ import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from 'react-router-dom';
-import state, {addPost, onPostChange} from './redux/state'
+import {StoreType} from "./redux/state";
+// import state, {addPost, onPostChange, StoreType} from './redux/state'
 
-function App() {
+type PropsType = {
+    store: StoreType
+}
+
+const App: React.FC<PropsType> = (props) => {
+    const state = props.store.getState()
 
     return (
         <BrowserRouter>
@@ -16,9 +22,8 @@ function App() {
                 <Navbar/>
                 <div className={s.appWrapperContent}>
                     <Route path={'/profile'} render={() => <Profile profilePage={state.profilePage}
-                                                                    addPost={addPost}
                                                                     message={state.profilePage.messageForNewPost}
-                                                                    onPostChange={onPostChange} />}/>
+                                                                    dispatch={props.store.dispatch.bind(props.store)} />}/>
                     <Route path={'/dialogs'} render={() => <Dialogs dialogsPage={state.dialogsPage}/>}/>
                 </div>
             </div>
