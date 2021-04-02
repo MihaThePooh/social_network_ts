@@ -1,27 +1,20 @@
 import React from 'react'
 import s from './ProfileInfo.module.css'
-// import Preloader from "../../common/preloader/Preloader";
 
 const ProfileInfo = () => {
-    // if(!props.profile) {
-    //     return <Preloader/>
-    // }
 
     return (
         <div>
             <div>
-                <img className={s.avaWallpaper} src="" alt="avaWallpaper"/>
+                <img className={s.avaWallpaper} src=""/>
             </div>
-            <div className={s.discriptionBlock}>
-                {/*<img src={props.profile.photos.large} />*/}
-                <img src="" alt="ava" />
-                <br></br>
-                    <label>aboutMe: props.profile.aboutMe</label>
-                <br></br>
-                    <label>fullName: props.profile.fullName</label>
-            </div>
+            <span className={s.discriptionBlock}>
+                <img className={s.avaProfile} src="" />
+                <div>aboutMe: props.profile.aboutMe</div>
+                <div>fullName: props.profile.fullName</div>
+            </span>
         </div>
     )
-}
+};
 
 export default ProfileInfo

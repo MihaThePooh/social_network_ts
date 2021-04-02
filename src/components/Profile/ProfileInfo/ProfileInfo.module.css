@@ -9,3 +9,10 @@
     padding: 10px;
 }
 
+.avaProfile {
+    width: 120px;
+    height: 150px;
+    background-color: darkred;
+    float: left;
+    margin: 5px 15px 10px 10px;
+}
