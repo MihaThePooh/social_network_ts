@@ -1,19 +1,18 @@
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
 import {UserProfileType} from "../../types";
 import {
     follow,
     setCurrentPage,
-    setUsers,
     setTotalUsersCount,
+    setUsers,
     toggleIsFetching,
     unfollow
 } from "../../redux/users_reducer";
 import {AppStateType} from "../../redux/redux_store";
-import axios from "axios";
 import {Users} from "./Users";
 import React, {useEffect} from "react";
 import {Preloader} from "../../common/Preloader/Preloader";
+import {usersAPI} from "../../api/api";
 
 
 type MapStatePropsType = {
@@ -38,25 +37,21 @@ export function UsersAPI(props: UsersPropsType) {
     useEffect(() => {
         if (props.users.length === 0) {
             props.toggleIsFetching(true);
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}&count=${props.pageSize}`)
-                .then(response => {
+            usersAPI.getUsers(props.currentPage, props.pageSize).then(data => {
                     props.toggleIsFetching(false);
-                    props.setUsers(response.data.items);
-                    props.setTotalUsersCount(response.data.totalCount);
+                    props.setUsers(data.items);
+                    props.setTotalUsersCount(data.totalCount);
                 })
         }
-    }, [])
-
+    }, []);
 
     const setCurrentPageHandler = (p: number) => {
         props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${props.pageSize}`)
-            .then(response => {
+        usersAPI.getUsers(p, props.pageSize).then(data => {
                 props.toggleIsFetching(false);
                 props.setCurrentPage(p);
-                debugger
-                props.setUsers(response.data.items);
-                props.setTotalUsersCount(response.data.totalCount);
+                props.setUsers(data.items);
+                props.setTotalUsersCount(data.totalCount);
             })
     };
 

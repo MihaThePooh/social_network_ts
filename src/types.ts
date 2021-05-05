@@ -8,6 +8,7 @@ import {
     toggleIsFetching,
     unfollow
 } from "./redux/users_reducer";
+import {setAuthUserData} from "./redux/auth_reducer";
 
 export type UsersPageType = {
     users: Array<UserProfileType>
@@ -93,6 +94,15 @@ export type ProfilePageType = {
     profile: ProfileType
 }
 
+export type AuthStateType = {
+    auth_reducer: {
+        userId: number
+        email: string
+        login: string
+        isAuth: boolean
+    }
+}
+
 export type ProfileActionsTypes = ReturnType<typeof addPost>
     | ReturnType<typeof changeNewText>
     | ReturnType<typeof setUserProfile>
@@ -107,4 +117,6 @@ export type UsersActionsTypes = ReturnType<typeof follow>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof toggleIsFetching>
 
-export type ActionsType = ProfileActionsTypes | DialogsActionsTypes | UsersActionsTypes
+export type AuthActionsTypes = ReturnType<typeof setAuthUserData>
+
+export type ActionsType = ProfileActionsTypes | DialogsActionsTypes | UsersActionsTypes | AuthActionsTypes

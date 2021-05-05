@@ -7,6 +7,7 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import {ReduxStoreType} from "./redux/redux_store";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 type PropsType = {
     store: ReduxStoreType
@@ -18,7 +19,7 @@ const App: React.FC<PropsType> = (props) => {
     return (
         <BrowserRouter>
             <div className={s.appWrapper}>
-                <Header/>
+                <HeaderContainer/>
                 <Navbar/>
                 <div className={s.appWrapperContent}>
                     <Route path={'/profile/:userId?'} render={() => <ProfileContainer />}/>
