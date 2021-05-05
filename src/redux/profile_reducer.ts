@@ -1,4 +1,4 @@
-import {ActionsType, PhotosType, PostsType, ProfileType} from "../types";
+import {ActionsType, PhotosType, PostsType, ProfilePageType, ProfileType} from "../types";
 
 const ADD_POST = "ADD_POST";
 const CHANGE_NEW_TEXT = "CHANGE_NEW_TEXT";
@@ -7,12 +7,21 @@ const SET_USER_PROFILE = "SET_USER_PROFILE";
 const DELET_POST = "DELET_POST";
 const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
 
-const initialState = {
+const initialState: ProfilePageType = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likesCount: 45},
         {id: 2, message: 'Programming.....', likesCount: 18}
     ] as Array<PostsType>,
-    messageForNewPost: ""
+    messageForNewPost: "",
+    profile: {
+        fullName: 'undefined',
+        userId: 99999999,
+        aboutMe: "some about me",
+        photos: {
+            small: "https://t4.ftcdn.net/jpg/03/32/59/65/360_F_332596535_lAdLhf6KzbW6PWXBWeIFTovTii1drkbT.jpg",
+            large: "https://t4.ftcdn.net/jpg/03/32/59/65/360_F_332596535_lAdLhf6KzbW6PWXBWeIFTovTii1drkbT.jpg"
+        }
+    }
 };
 
 type InitialStateType = typeof initialState
@@ -35,15 +44,15 @@ const profile_reducer = (state = initialState, action: ActionsType): InitialStat
                 messageForNewPost: action.newText
             };
         }
+        case SET_USER_PROFILE:
+            return {
+                ...state,
+                profile: action.profile
+            };
         // case SET_STATUS:
         //     return {
         //         ...state,
         //         status: action.status
-        //     };
-        // case SET_USER_PROFILE:
-        //     return {
-        //         ...state,
-        //         profile: action.profile
         //     };
         // case DELET_POST:
         //     return {
@@ -60,18 +69,18 @@ const profile_reducer = (state = initialState, action: ActionsType): InitialStat
     }
 };
 
-export const addPostAC = () => {
+export const addPost = () => {
     return {
         type: ADD_POST
     } as const
 };
-export const changeNewTextAC = (newText: string) => {
+export const changeNewText = (newText: string) => {
     return {
         type: CHANGE_NEW_TEXT,
         newText: newText
     } as const
 };
-export const setUserProfileAC = (profile: ProfileType) => {
+export const setUserProfile = (profile: ProfileType) => {
     return {
         type: SET_USER_PROFILE,
         profile

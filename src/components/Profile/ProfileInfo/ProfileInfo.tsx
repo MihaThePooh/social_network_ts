@@ -1,7 +1,13 @@
 import React from 'react'
 import s from './ProfileInfo.module.css'
+import {Preloader} from "../../../common/Preloader/Preloader";
+import {ProfileType} from "../../../types";
 
-const ProfileInfo = () => {
+const ProfileInfo = (props: ProfileType) => {
+
+    if (!props) {
+        return <Preloader/>
+    }
 
     return (
         <div>
@@ -9,9 +15,10 @@ const ProfileInfo = () => {
                 <img className={s.avaWallpaper} src=""/>
             </div>
             <span className={s.discriptionBlock}>
-                <img className={s.avaProfile} src="" />
-                <div>aboutMe: props.profile.aboutMe</div>
-                <div>fullName: props.profile.fullName</div>
+                <img className={s.avaProfile} src={props.photos.large} />
+                <div>fullName: {props.fullName}</div>
+                <div>userАЙДИ: {props.userId}</div>
+                <div>aboutMe: {props.aboutMe}</div>
             </span>
         </div>
     )

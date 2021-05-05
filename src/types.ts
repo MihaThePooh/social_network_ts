@@ -1,6 +1,13 @@
-import {addPostAC, changeNewTextAC} from "./redux/profile_reducer";
+import {addPost, changeNewText, setUserProfile} from "./redux/profile_reducer";
 import {sendMessageAC, updateNewMessageBodyAC} from "./redux/dialogs_reducer";
-import {followAC, setUsers, unfollowAC} from "./redux/users_reducer";
+import {
+    follow,
+    setCurrentPage,
+    setUsers,
+    setTotalUsersCount,
+    toggleIsFetching,
+    unfollow
+} from "./redux/users_reducer";
 
 export type UsersPageType = {
     users: Array<UserProfileType>
@@ -12,12 +19,15 @@ export type UsersPageType = {
 }
 
 export type UserProfileType = {
+    name: string
     id: number
-    fullName: string
-    status: string
-    photoURL: string
+    uniqueUrlName: null | string
+    photos: {
+        small: any
+        large: any
+    }
+    status: null | string | undefined
     followed: boolean
-    location: LocationUserType
 }
 export type LocationUserType = {
     city: string
@@ -40,12 +50,22 @@ export type PhotosType = {
     large: string | null
 }
 export type ProfileType = {
-    userId: number,
-    lookingForAJob: boolean,
-    lookingForAJobDecription: string
-    fullName: string,
-    contacts: ContactsType
-    photos: PhotosType
+    aboutMe: string
+    contacts?: {
+        facebook: string,
+        website: null,
+        vk: string,
+        twitter: string,
+        instagram: string
+    }
+    fullName: string
+    lookingForAJob?: boolean
+    lookingForAJobDescription?: string
+    photos: {
+        small: string,
+        large: string
+    }
+    userId: number
 }
 
 export type MessageType = {
@@ -70,10 +90,21 @@ export type PostsType = {
 export type ProfilePageType = {
     messageForNewPost: string
     posts: Array<PostsType>
+    profile: ProfileType
 }
 
-export type ProfileActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewTextAC>
-export type DialogsActionsTypes = ReturnType<typeof updateNewMessageBodyAC> | ReturnType<typeof sendMessageAC>
-export type UsersActionsTypes = ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsers>
+export type ProfileActionsTypes = ReturnType<typeof addPost>
+    | ReturnType<typeof changeNewText>
+    | ReturnType<typeof setUserProfile>
+
+export type DialogsActionsTypes = ReturnType<typeof updateNewMessageBodyAC>
+    | ReturnType<typeof sendMessageAC>
+
+export type UsersActionsTypes = ReturnType<typeof follow>
+    | ReturnType<typeof unfollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalUsersCount>
+    | ReturnType<typeof toggleIsFetching>
 
 export type ActionsType = ProfileActionsTypes | DialogsActionsTypes | UsersActionsTypes

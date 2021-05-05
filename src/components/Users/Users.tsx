@@ -1,63 +1,68 @@
 import React from "react";
-import {UsersPropsType} from "./UsersContainer";
 import s from "./Users.module.css"
+import {UserProfileType} from "../../types";
+import {NavLink} from "react-router-dom";
 
+type UsersPropsType = {
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    users: Array<UserProfileType>
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    setCurrentPageHandler: (p: number) => void
+}
 
 export function Users(props: UsersPropsType) {
 
-    if (props.users.length === 0) {
-        props.setUsers([
-            {
-                id: 1,
-                fullName: "Yury",
-                status: "I am a programmer",
-                photoURL: "",
-                followed: true,
-                location: {city: "Minsk", country: "Belarus"}
-            },
-            {
-                id: 2,
-                photoURL: "",
-                followed: true,
-                fullName: "Sergey",
-                status: "I am a boss",
-                location: {city: "Moscow", country: "Russia"}
-            },
-            {
-                id: 3,
-                photoURL: "",
-                followed: true,
-                fullName: "Sasha",
-                status: "I am a storekeeper",
-                location: {city: "Kiev", country: "Ukrane"}
-            }
-        ])
+    const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+    const pages = [];
+    for (let i = 1; i <= 10; i++) {
+        pages.push(i)
     }
 
     return (
         <div>
+            <div>
+                {
+                    pages.map(p => {
+                        return <span className={props.currentPage === p ? s.selectedPage : ""}
+                                     onClick={(e) => {
+                                         props.setCurrentPageHandler(p)
+                                     }}> |{p}| </span>
+                    })
+                }
+                ...
+                <span className={props.currentPage === pagesCount ? s.selectedPage : ""}
+                      onClick={(e) => {
+                          props.setCurrentPageHandler(pagesCount)
+                      }}> |{pagesCount}| </span>
+            </div>
             {
                 props.users.map(u => <div key={u.id}>
+                <span>
+                    <div>
+                        <NavLink to={`/profile/${u.id}`}>
+                        <img className={s.userAva}
+                             src={u.photos.small != null ?
+                                 u.photos.small :
+                                 "https://t4.ftcdn.net/jpg/03/32/59/65/360_F_332596535_lAdLhf6KzbW6PWXBWeIFTovTii1drkbT.jpg"}/>
+                        </NavLink>
+                    </div>
+                    <div>
+                        {u.followed
+                            ? <button onClick={() => {
+                                props.unfollow(u.id)
+                            }}>Unfollow</button>
+                            : <button onClick={() => {
+                                props.follow(u.id)
+                            }}>Follow</button>}
+                    </div>
+                </span>
                     <span>
-                        <div>
-                            <img className={s.userAva} src={u.photoURL}/>
-                        </div>
-                        <div>
-                            {u.followed
-                            ? <button onClick={() => {props.unfollow(u.id)}}>Unfollow</button>
-                            : <button onClick={() => {props.follow(u.id)}}>Follow</button>}
-                        </div>
-                    </span>
-                    <span>
-                        <span>
-                            <div>{u.fullName}</div>
-                            <div>{u.status}</div>
-                        </span>
-                        <span>
-                            <div>{u.location.country}</div>
-                            <div>{u.location.city}</div>
-                        </span>
-                    </span>
+                        <div>{u.name}</div>
+                        <hr/>
+                </span>
                 </div>)
             }
         </div>
