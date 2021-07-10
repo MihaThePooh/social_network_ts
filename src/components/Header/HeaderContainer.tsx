@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react'
 import Header from "./Header";
-import axios from "axios";
 import {connect} from "react-redux";
 import {AuthStateType} from "../../types";
-import {setAuthUserData} from "../../redux/auth_reducer";
+import {getAuthUserData} from "../../redux/auth_reducer";
 
 type mapStateToProps = {
     isAuth: boolean
@@ -12,22 +11,15 @@ type mapStateToProps = {
     userId: number
 }
 type mapDispatchToProps = {
-    setAuthUserData: (id: number, login: string, email: string) => void
+    // setAuthUserData: (id: number, login: string, email: string) => void
+    getAuthUserData: () => void
 }
 type HeaderContainerPropsType = mapStateToProps & mapDispatchToProps
 
 function HeaderContainer(props: HeaderContainerPropsType) {
 
     useEffect( () => {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials: true})
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                        let {id, email, login} = response.data.data;
-                        props.setAuthUserData(id, email, login);
-                    } else if (response.data.resultCode === 1) {
-                        return alert(response.data.messages[0])
-                    }
-            })
+        props.getAuthUserData()
     }, []);
 
     return <Header {...props} />
@@ -43,5 +35,5 @@ const mapStateToProps = (state: AuthStateType): mapStateToProps => {
 };
 
 export default connect(mapStateToProps, {
-    setAuthUserData
+    getAuthUserData
 })(HeaderContainer)

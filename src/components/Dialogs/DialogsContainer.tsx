@@ -7,7 +7,8 @@ import {Dispatch} from "redux";
 
 let mapStateToProps = (state: AppStateType) => {
     return {
-        dialogsPage: state.dialogs_reducer
+        dialogsPage: state.dialogs_reducer,
+        isAuth: state.auth_reducer.isAuth
     }
 };
 let mapDispatchToProps = (dispatch: Dispatch) => {

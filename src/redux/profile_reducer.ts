@@ -1,4 +1,5 @@
 import {ActionsType, PhotosType, PostsType, ProfilePageType, ProfileType} from "../types";
+import {usersAPI} from "../api/api";
 
 const ADD_POST = "ADD_POST";
 const CHANGE_NEW_TEXT = "CHANGE_NEW_TEXT";
@@ -85,6 +86,11 @@ export const setUserProfile = (profile: ProfileType) => {
         type: SET_USER_PROFILE,
         profile
     } as const
+};
+export const getUserProfile = (userId: number) => (dispatch: any) => {
+    usersAPI.getProfile(+userId).then(response => {
+        dispatch(setUserProfile(response.data));
+    })
 };
 export const setStatusAC = (status: string) => {
     return {

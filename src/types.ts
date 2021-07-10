@@ -51,7 +51,7 @@ export type PhotosType = {
     large: string | null
 }
 export type ProfileType = {
-    aboutMe: string
+    aboutMe?: string
     contacts?: {
         facebook: string,
         website: null,
@@ -59,14 +59,15 @@ export type ProfileType = {
         twitter: string,
         instagram: string
     }
-    fullName: string
+    fullName?: string
     lookingForAJob?: boolean
     lookingForAJobDescription?: string
     photos: {
         small: string,
         large: string
     }
-    userId: number
+    userId?: number
+    isAuth?: boolean
 }
 
 export type MessageType = {
