@@ -33,8 +33,7 @@ function HeaderContainer(props: HeaderContainerPropsType) {
     return <Header {...props} />
 }
 
-const mapStateToProps = (state: AuthStateType) => {
-
+const mapStateToProps = (state: AuthStateType): mapStateToProps => {
     return {
         isAuth: state.auth_reducer.isAuth,
         login: state.auth_reducer.login,

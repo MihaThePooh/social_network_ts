@@ -14,7 +14,6 @@ type InitialStateType = typeof initialState
 const auth_reducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA: {
-
             return {
                 ...state,
                 userId: action.userId,
@@ -29,7 +28,6 @@ const auth_reducer = (state = initialState, action: ActionsType): InitialStateTy
 };
 
 export const setAuthUserData = (userId: number, email: string, login: string) => {
-
     return {
         type: SET_USER_DATA,
         userId,
