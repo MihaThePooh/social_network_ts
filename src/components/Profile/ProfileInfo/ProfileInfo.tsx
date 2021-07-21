@@ -2,6 +2,7 @@ import React from 'react'
 import s from './ProfileInfo.module.css'
 import {Preloader} from "../../../common/Preloader/Preloader";
 import {ProfileType} from "../../../types";
+import {ProfileStatus} from "./ProfileStatus";
 
 const ProfileInfo = (props: ProfileType) => {
 
@@ -11,11 +12,12 @@ const ProfileInfo = (props: ProfileType) => {
 
     return (
         <div>
-            <div>
-                <img className={s.avaWallpaper} src=""/>
-            </div>
+            {/*<div>*/}
+            {/*    <img className={s.avaWallpaper} src=""/>*/}
+            {/*</div>*/}
             <span className={s.discriptionBlock}>
                 <img className={s.avaProfile} src={props.photos.large} />
+                <ProfileStatus status={"LooooooooLfromPROPS"}/>
                 <div>fullName: {props.fullName}</div>
                 <div>userАЙДИ: {props.userId}</div>
                 <div>aboutMe: {props.aboutMe}</div>
