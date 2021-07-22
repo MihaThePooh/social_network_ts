@@ -1,12 +1,12 @@
 import {ActionsType, PhotosType, PostsType, ProfilePageType, ProfileType} from "../types";
-import {usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = "ADD_POST";
 const CHANGE_NEW_TEXT = "CHANGE_NEW_TEXT";
 const SET_STATUS = "SET_STATUS";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
-const DELET_POST = "DELET_POST";
-const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
+// const DELET_POST = "DELET_POST";
+// const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
 
 const initialState: ProfilePageType = {
     posts: [
@@ -21,7 +21,8 @@ const initialState: ProfilePageType = {
         photos: {
             small: "https://t4.ftcdn.net/jpg/03/32/59/65/360_F_332596535_lAdLhf6KzbW6PWXBWeIFTovTii1drkbT.jpg",
             large: "https://t4.ftcdn.net/jpg/03/32/59/65/360_F_332596535_lAdLhf6KzbW6PWXBWeIFTovTii1drkbT.jpg"
-        }
+        },
+        status: "statusFromReducer"
     }
 };
 
@@ -45,16 +46,21 @@ const profile_reducer = (state = initialState, action: ActionsType): InitialStat
                 messageForNewPost: action.newText
             };
         }
-        case SET_USER_PROFILE:
+        case SET_USER_PROFILE: {
             return {
                 ...state,
                 profile: action.profile
             };
-        // case SET_STATUS:
-        //     return {
-        //         ...state,
-        //         status: action.status
-        //     };
+        }
+        case SET_STATUS: {
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    status: action.status
+                }
+            };
+        }
         // case DELET_POST:
         //     return {
         //         ...state,
@@ -66,7 +72,7 @@ const profile_reducer = (state = initialState, action: ActionsType): InitialStat
         //         profile: {...state.profile, photos: action.photos}
         //     };
         default:
-            return initialState
+            return state
     }
 };
 
@@ -87,50 +93,51 @@ export const setUserProfile = (profile: ProfileType) => {
         profile
     } as const
 };
-export const getUserProfile = (userId: number) => (dispatch: any) => {
-    usersAPI.getProfile(+userId).then(response => {
-        dispatch(setUserProfile(response.data));
-    })
+export const getUserProfile = (userId: number) => async (dispatch: any) => {
+    const profile = await usersAPI.getProfile(+userId);
+    const status = await profileAPI.getStatus(+userId);
+    dispatch(setUserProfile(profile));
+    dispatch(setStatus(status))
 };
-export const setStatusAC = (status: string) => {
+export const setStatus = (status: string) => {
+
     return {
         type: SET_STATUS,
         status
     } as const
 };
-export const deletePostAC = (postId: number) => {
-    return {
-        type: DELET_POST,
-        postId
-    } as const
+// export const updateStatus = (status: string) => {
+//     return {
+//         type:
+//     } as const
+// }
+// export const deletePostAC = (postId: number) => {
+//     return {
+//         type: DELET_POST,
+//         postId
+//     } as const
+// };
+// export const savePhotoSuccessAC = (photos: PhotosType) => {
+//     return {
+//         type: SAVE_PHOTO_SUCCESS,
+//         photos
+//     } as const
+// };
+export const getStatus = (userId: number) => async (dispatch: any) => {
+    const response = await profileAPI.getStatus(userId);
+    dispatch(setStatus(response.data))
 };
-export const savePhotoSuccessAC = (photos: PhotosType) => {
-    return {
-        type: SAVE_PHOTO_SUCCESS,
-        photos
-    } as const
+export const updateStatus = (status: string) => async (dispatch: any) => {
+    try {
+        const response = await profileAPI.updateStatus(status);
+
+        if (response.data.resultCode === 0) {
+            dispatch(setStatus(status))
+        }
+    } catch (error) {
+        //
+    }
 };
-
-
-// export const getUserProfile = (userId: number) => async (dispatch: any) => {
-//     const response = await usersAPI.getProfile(userId);
-//     dispatch(setUserProfileAC(response.data))
-// };
-// export const getStatus = (userId: number) => async (dispatch: any) => {
-//     const response = await usersAPI.getStatus(userId);
-//     dispatch(setStatusAC(response.data))
-// };
-// export const updateStatus = (userId: string) => async (dispatch: any) => {
-//     try {
-//         const response = await usersAPI.updateStatus(status);
-//
-//         if (response.data.resultCode === 0) {
-//             dispatch(setStatus(status))
-//         }
-//     } catch (error) {
-//         //
-//     }
-// };
 // export const savePhoto = (file: any) => async (dispatch: any) => {
 //     const response = await usersAPI.savePhoto(file);
 //

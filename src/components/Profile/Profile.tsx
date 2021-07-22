@@ -3,11 +3,19 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import {ProfileType} from "../../types";
 
-function Profile(props: ProfileType) {
+type ProfilePagePropsType = {
+    profile: ProfileType
+    getStatus: (userId: number) => void
+    updateStatus: (status: string) => void
+}
+
+function Profile(props: ProfilePagePropsType) {
+
+    console.log(props)
 
     return (
         <div>
-            <ProfileInfo {...props}/>
+            <ProfileInfo {...props} getStatus={props.getStatus} updateStatus={props.updateStatus}/>
             <MyPostsContainer />
         </div>
     )

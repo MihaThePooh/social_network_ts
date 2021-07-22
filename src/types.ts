@@ -1,4 +1,4 @@
-import {addPost, changeNewText, setUserProfile} from "./redux/profile_reducer";
+import {addPost, changeNewText, setStatus, setUserProfile} from "./redux/profile_reducer";
 import {sendMessageAC, updateNewMessageBodyAC} from "./redux/dialogs_reducer";
 import {
     followSuccess,
@@ -62,12 +62,13 @@ export type ProfileType = {
     fullName?: string
     lookingForAJob?: boolean
     lookingForAJobDescription?: string
-    photos: {
+    photos?: {
         small: string,
         large: string
     }
     userId?: number
     isAuth?: boolean
+    status: string
 }
 
 export type MessageType = {
@@ -107,6 +108,7 @@ export type AuthStateType = {
 export type ProfileActionsTypes = ReturnType<typeof addPost>
     | ReturnType<typeof changeNewText>
     | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setStatus>
 
 export type DialogsActionsTypes = ReturnType<typeof updateNewMessageBodyAC>
     | ReturnType<typeof sendMessageAC>

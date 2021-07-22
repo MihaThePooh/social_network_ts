@@ -4,7 +4,13 @@ import {Preloader} from "../../../common/Preloader/Preloader";
 import {ProfileType} from "../../../types";
 import {ProfileStatus} from "./ProfileStatus";
 
-const ProfileInfo = (props: ProfileType) => {
+type ProfileInfoPropsType = {
+    profile: ProfileType
+    getStatus: (userId: number) => void
+    updateStatus: (status: string) => void
+}
+
+const ProfileInfo = (props: ProfileInfoPropsType) => {
 
     if (!props) {
         return <Preloader/>
@@ -16,11 +22,11 @@ const ProfileInfo = (props: ProfileType) => {
             {/*    <img className={s.avaWallpaper} src=""/>*/}
             {/*</div>*/}
             <span className={s.discriptionBlock}>
-                <img className={s.avaProfile} src={props.photos.large} />
-                <ProfileStatus status={"LooooooooLfromPROPS"}/>
-                <div>fullName: {props.fullName}</div>
-                <div>userАЙДИ: {props.userId}</div>
-                <div>aboutMe: {props.aboutMe}</div>
+                <img className={s.avaProfile} src={props.profile.photos!.large} />
+                <ProfileStatus status={props.profile.status} updateStatus={props.updateStatus}/>
+                <div>fullName: {props.profile.fullName}</div>
+                <div>userАЙДИ: {props.profile.userId}</div>
+                <div>aboutMe: {props.profile.aboutMe}</div>
             </span>
         </div>
     )
