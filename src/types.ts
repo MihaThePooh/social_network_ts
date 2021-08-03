@@ -1,12 +1,13 @@
-import {addPost, changeNewText, setStatus, setUserProfile} from "./redux/profile_reducer";
-import {sendMessageAC, updateNewMessageBodyAC} from "./redux/dialogs_reducer";
+import {addPost, setStatus, setUserProfile} from "./redux/profile_reducer";
+import {sendMessageAC} from "./redux/dialogs_reducer";
 import {
     followSuccess,
     setCurrentPage,
-    setUsers,
     setTotalUsersCount,
+    setUsers,
+    toggleFollowingProgress,
     toggleIsFetching,
-    unfollowSuccess, toggleFollowingProgress
+    unfollowSuccess
 } from "./redux/users_reducer";
 import {setAuthUserData} from "./redux/auth_reducer";
 
@@ -82,7 +83,6 @@ export type DialogsType = {
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessageType>
-    newMessageBody: string
 }
 
 export type PostsType = {
@@ -91,7 +91,6 @@ export type PostsType = {
     likesCount: number
 }
 export type ProfilePageType = {
-    messageForNewPost: string
     posts: Array<PostsType>
     profile: ProfileType
 }
@@ -106,12 +105,10 @@ export type AuthStateType = {
 }
 
 export type ProfileActionsTypes = ReturnType<typeof addPost>
-    | ReturnType<typeof changeNewText>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
 
-export type DialogsActionsTypes = ReturnType<typeof updateNewMessageBodyAC>
-    | ReturnType<typeof sendMessageAC>
+export type DialogsActionsTypes = ReturnType<typeof sendMessageAC>
 
 export type UsersActionsTypes = ReturnType<typeof followSuccess>
     | ReturnType<typeof unfollowSuccess>

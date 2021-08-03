@@ -1,8 +1,7 @@
-import {ActionsType, PhotosType, PostsType, ProfilePageType, ProfileType} from "../types";
+import {ActionsType, PostsType, ProfilePageType, ProfileType} from "../types";
 import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = "ADD_POST";
-const CHANGE_NEW_TEXT = "CHANGE_NEW_TEXT";
 const SET_STATUS = "SET_STATUS";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 // const DELET_POST = "DELET_POST";
@@ -13,7 +12,6 @@ const initialState: ProfilePageType = {
         {id: 1, message: 'Hi, how are you?', likesCount: 45},
         {id: 2, message: 'Programming.....', likesCount: 18}
     ] as Array<PostsType>,
-    messageForNewPost: "",
     profile: {
         fullName: 'undefined',
         userId: 99999999,
@@ -35,15 +33,8 @@ const profile_reducer = (state = initialState, action: ActionsType): InitialStat
                 ...state,
                 posts: [
                     ...state.posts,
-                    {id: new Date().getTime(), message: state.messageForNewPost, likesCount: 0}
-                ],
-                messageForNewPost: ""
-            };
-        }
-        case CHANGE_NEW_TEXT: {
-            return {
-                ...state,
-                messageForNewPost: action.newText
+                    {id: new Date().getTime(), message: action.newPostText, likesCount: 0}
+                ]
             };
         }
         case SET_USER_PROFILE: {
@@ -76,15 +67,10 @@ const profile_reducer = (state = initialState, action: ActionsType): InitialStat
     }
 };
 
-export const addPost = () => {
+export const addPost = (newPostText: string) => {
     return {
-        type: ADD_POST
-    } as const
-};
-export const changeNewText = (newText: string) => {
-    return {
-        type: CHANGE_NEW_TEXT,
-        newText: newText
+        type: ADD_POST,
+        newPostText
     } as const
 };
 export const setUserProfile = (profile: ProfileType) => {
