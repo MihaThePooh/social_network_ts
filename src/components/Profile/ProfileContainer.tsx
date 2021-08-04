@@ -22,13 +22,13 @@ type OwnPropsType = MapStateToPropsType & MapDispatchToPropsType
 type PropsType = RouteComponentProps<PathParamsType> & OwnPropsType
 
 function ProfileContainer(props: PropsType) {
-
+    console.log(props);
     useEffect(() => {
         let userId = +props.match.params.userId;
         if(!userId) {
-            userId = 14348
+            userId = 14348 // мой айди
         }
-        props.getUserProfile(+userId)
+        props.getUserProfile(userId)
     }, []);
 
     return (

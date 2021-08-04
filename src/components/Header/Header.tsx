@@ -7,6 +7,7 @@ type HeaderPropsType = {
     email: string
     login: string
     isAuth: boolean
+    logout: () => void
 }
 
 function Header(props: HeaderPropsType) {
@@ -15,7 +16,7 @@ function Header(props: HeaderPropsType) {
         <header className={s.header}>
             <img />
             { props.isAuth ?
-                <span className={s.loginBlock}>{props.login}</span> :
+                <span className={s.loginBlock}>{props.login} - <button onClick={props.logout}>LogOut</button></span> :
                 <NavLink to={'/login'}><span className={s.loginBlock}>LogIn</span></NavLink>
             }
         </header>

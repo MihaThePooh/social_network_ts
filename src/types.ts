@@ -69,7 +69,7 @@ export type ProfileType = {
     }
     userId?: number
     isAuth?: boolean
-    status: string
+    status?: string
 }
 
 export type MessageType = {
