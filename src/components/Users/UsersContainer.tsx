@@ -5,6 +5,13 @@ import {AppStateType} from "../../redux/redux_store";
 import {Users} from "./Users";
 import React, {useEffect} from "react";
 import {Preloader} from "../../common/Preloader/Preloader";
+import {
+    getCurrentPageSelector, getFollowingInProgressSelector,
+    getIsFetchingSelector,
+    getPageSizeSelector,
+    getTotalUsersCountSelector,
+    getUsersSelector, getUsersSelectorSuper
+} from "../../redux/users_selectors";
 
 
 type MapStatePropsType = {
@@ -50,14 +57,16 @@ function UsersAPI(props: UsersPropsType) {
     </>
 }
 
+
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+    console.log("mapStateToProps")
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        users: getUsersSelectorSuper(state),
+        pageSize: getPageSizeSelector(state),
+        totalUsersCount: getTotalUsersCountSelector(state),
+        currentPage: getCurrentPageSelector(state),
+        isFetching: getIsFetchingSelector(state),
+        followingInProgress: getFollowingInProgressSelector(state)
     }
 };
 

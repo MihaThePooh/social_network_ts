@@ -10,6 +10,7 @@ import {
     unfollowSuccess
 } from "./redux/users_reducer";
 import {setAuthUserData} from "./redux/auth_reducer";
+import {initializedSuccess} from "./redux/app_reducer";
 
 export type UsersPageType = {
     users: Array<UserProfileType>
@@ -120,4 +121,6 @@ export type UsersActionsTypes = ReturnType<typeof followSuccess>
 
 export type AuthActionsTypes = ReturnType<typeof setAuthUserData>
 
-export type ActionsType = ProfileActionsTypes | DialogsActionsTypes | UsersActionsTypes | AuthActionsTypes
+export type AppActionsTypes = ReturnType<typeof initializedSuccess>
+
+export type ActionsType = ProfileActionsTypes | DialogsActionsTypes | UsersActionsTypes | AuthActionsTypes | AppActionsTypes

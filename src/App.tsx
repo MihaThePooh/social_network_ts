@@ -1,24 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import s from "./App.module.css"
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, Route} from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
-import {ReduxStoreType} from "./redux/redux_store";
+import {AppStateType, ReduxStoreType} from "./redux/redux_store";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
+import {connect} from "react-redux";
+import {compose} from "redux";
+import {initializeApp} from "./redux/app_reducer";
+import {Preloader} from "./common/Preloader/Preloader";
 
 type PropsType = {
-    store: ReduxStoreType
+    initializeApp: () => void,
+    initialized: boolean
 }
 
-const App: React.FC<PropsType> = (props) => {
-    // const state = props.store.getState();
+const App = (props: any) => {
+    useEffect( () => {
+        props.initializeApp()
+    }, []);
+    console.log(props)
 
-    return (
-        <BrowserRouter>
-            <div className={s.appWrapper}>
+    if (!props.initialized) return <Preloader/>
+
+    return <div className={s.appWrapper}>
                 <HeaderContainer/>
                 <Navbar/>
                 <div className={s.appWrapperContent}>
@@ -28,8 +37,10 @@ const App: React.FC<PropsType> = (props) => {
                     <Route path={'/login'} render={() => <Login />} />
                 </div>
             </div>
-        </BrowserRouter>
-    );
 };
 
-export default App;
+const mapStateToProps = (state: AppStateType) => ({
+    initialized: state.app.initialized
+});
+
+export default connect(mapStateToProps, { initializeApp })(App);
