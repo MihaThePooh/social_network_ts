@@ -53,7 +53,6 @@ function UsersAPI(props: UsersPropsType) {
             setCurrentPageHandler={setCurrentPageHandler}
             toggleFollowingProgress={props.toggleFollowingProgress}
             followinInProgress={props.followingInProgress}
-            {}
         />
     </>
 }
