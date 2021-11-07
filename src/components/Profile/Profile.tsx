@@ -11,8 +11,6 @@ type ProfilePagePropsType = {
 
 function Profile(props: ProfilePagePropsType) {
 
-    console.log(props)
-
     return (
         <div>
             <ProfileInfo {...props} getStatus={props.getStatus} updateStatus={props.updateStatus}/>

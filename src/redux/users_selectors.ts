@@ -8,7 +8,6 @@ export const getUsersSelector = (state: AppStateType) => {
     return getUsers(state).filter(u => true)
 }
 export const getUsersSelectorSuper = createSelector( getUsers, (users) => {
-    debugger
     return users.filter(u => true)
 })
 

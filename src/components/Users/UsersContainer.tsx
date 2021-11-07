@@ -6,11 +6,12 @@ import {Users} from "./Users";
 import React, {useEffect} from "react";
 import {Preloader} from "../../common/Preloader/Preloader";
 import {
-    getCurrentPageSelector, getFollowingInProgressSelector,
+    getCurrentPageSelector,
+    getFollowingInProgressSelector,
     getIsFetchingSelector,
     getPageSizeSelector,
     getTotalUsersCountSelector,
-    getUsersSelector, getUsersSelectorSuper
+    getUsersSelectorSuper
 } from "../../redux/users_selectors";
 
 
@@ -59,7 +60,7 @@ function UsersAPI(props: UsersPropsType) {
 
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
-    console.log("mapStateToProps")
+
     return {
         users: getUsersSelectorSuper(state),
         pageSize: getPageSizeSelector(state),

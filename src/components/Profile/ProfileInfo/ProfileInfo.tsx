@@ -18,9 +18,6 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
 
     return (
         <div>
-            {/*<div>*/}
-            {/*    <img className={s.avaWallpaper} src=""/>*/}
-            {/*</div>*/}
             <span className={s.discriptionBlock}>
                 <img className={s.avaProfile} src={props.profile.photos!.large} />
                 <ProfileStatus status={props.profile.status} updateStatus={props.updateStatus}/>

@@ -86,7 +86,6 @@ export const getUserProfile = (userId: number) => async (dispatch: any) => {
     dispatch(setStatus(status))
 };
 export const setStatus = (status: string) => {
-
     return {
         type: SET_STATUS,
         status
@@ -114,15 +113,15 @@ export const getStatus = (userId: number) => async (dispatch: any) => {
     dispatch(setStatus(response.data))
 };
 export const updateStatus = (status: string) => async (dispatch: any) => {
-    try {
+    // try {
         const response = await profileAPI.updateStatus(status);
 
         if (response.data.resultCode === 0) {
             dispatch(setStatus(status))
         }
-    } catch (error) {
+    // } catch (error) {
         //
-    }
+    // }
 };
 // export const savePhoto = (file: any) => async (dispatch: any) => {
 //     const response = await usersAPI.savePhoto(file);

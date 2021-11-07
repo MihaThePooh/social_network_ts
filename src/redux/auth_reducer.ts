@@ -39,39 +39,37 @@ export const setAuthUserData = (userId: number, email: string, login: string, is
     } as const
 };
 
-export const getAuthUserData = () => (dispatch: any) => {
-    return authAPI.me().then(response => {
-        if (response.data.resultCode === 0) {
-            let {id, login, email} = response.data.data;
-            dispatch(setAuthUserData(id, email, login, true))
-        } else if (response.data.resultCode === 1) {
-            return alert(response.data.messages[0])
-        }
-    })
+export const getAuthUserData = () => async (dispatch: any) => {
+    let response = await authAPI.me();
+
+    if (response.data.resultCode === 0) {
+        let {id, login, email} = response.data.data;
+        dispatch(setAuthUserData(id, email, login, true))
+    } else if (response.data.resultCode === 1) {
+        return alert(response.data.messages[0])
+    }
 };
 
-export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
+export const login = (email: string, password: string, rememberMe: boolean) => async (dispatch: any) => {
 
+    let response = await authAPI.login(email, password, rememberMe);
 
-
-    authAPI.login(email, password, rememberMe).then(response => {
-        if (response.data.resultCode === 0) {
-            dispatch(getAuthUserData())
-        } else if (response.data.resultCode === 1) {
-            let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
-            dispatch(stopSubmit("login", {_error: message}));
-        }
-    })
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthUserData())
+    } else if (response.data.resultCode === 1) {
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
+        dispatch(stopSubmit("login", {_error: message}));
+    }
 };
 
-export const logout = () => (dispatch: any) => {
-    authAPI.logout().then(response => {
-        if (response.data.resultCode === 0) {
-            dispatch(setAuthUserData(0, "none", "none", false))
-        } else if (response.data.resultCode === 1) {
-            return alert(response.data.messages[0])
-        }
-    })
+export const logout = () => async (dispatch: any) => {
+    let response = await authAPI.logout();
+
+    if (response.data.resultCode === 0) {
+        dispatch(setAuthUserData(0, "none", "none", false))
+    } else if (response.data.resultCode === 1) {
+        return alert(response.data.messages[0])
+    }
 };
 
 export default auth_reducer
